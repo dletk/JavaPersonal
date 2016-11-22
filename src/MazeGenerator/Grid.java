@@ -88,13 +88,20 @@ public class Grid extends GCompound {
                 cell2 = arrCells[i+1][j];
             }
             if (!cell1.getSetContain().contains(cell2) && !cell2.getSetContain().contains(cell1)) {
-//                    pause(1000);
+                    pause(100);
                 current_wall.sendToFront();
                 current_wall.setColor(Color.WHITE);
-                HashSet<Cell> current_set = cell1.getSetContain();
-                current_set.addAll(cell2.getSetContain());
-                cell2.setSetContain(current_set);
-                cell1.setSetContain(current_set);
+//                HashSet<Cell> current_set = cell1.getSetContain();
+//                current_set.addAll(cell2.getSetContain());
+//                cell2.setSetContain(current_set);
+//                cell1.setSetContain(current_set);
+                joinSet(cell1,cell2);
+            }
+        }
+
+        for (int i=0; i< arrCells.length;i++) {
+            for (int j=0; j< arrCells.length;j++) {
+                System.out.println(arrCells[i][j].getSetContain());
             }
         }
 
@@ -107,6 +114,20 @@ public class Grid extends GCompound {
 //        cu2.add(arrCells[3][3]);
 //        System.out.println(arrCells[1][2].getSetContain());
 //        System.out.println(arrCells[2][3].getSetContain());
+    }
+
+    /**
+     * This function will join the set of cell2 and cell1, and set all other cells in the same set with them to have the
+     * same setContain also.
+     */
+    private void joinSet(Cell cell1, Cell cell2) {
+        HashSet<Cell> current_set = cell1.getSetContain();
+        current_set.addAll(cell2.getSetContain());
+        Iterator<Cell> iter = current_set.iterator();
+        while (iter.hasNext()) {
+            Cell aCell = iter.next();
+            aCell.setSetContain(current_set);
+        }
     }
 
     /**

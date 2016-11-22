@@ -23,6 +23,7 @@ public class MazeGenerator extends GraphicsProgram {
     }
 
     public void run() {
+        waitForClick();
         aMaze.generateMaze();
     }
 }
