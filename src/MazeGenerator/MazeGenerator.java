@@ -9,7 +9,7 @@ import acm.program.GraphicsProgram;
 public class MazeGenerator extends GraphicsProgram {
 
     private static final int SIZE_CELLS = 20;
-    private static final int SIZE_MAZE = 3;
+    private static final int SIZE_MAZE = 20;
     private static final double UPPER_LEFT_X = 300;
     private static final double UPPER_LEFT_Y = 100;
 

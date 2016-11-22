@@ -62,7 +62,7 @@ public class Grid extends GCompound {
                 }
 
                 arrCells[i][j] = new Cell(x+j*cellSize,y+i*cellSize,cellSize,cellSize,new HashSet<>());
-                arrCells[i][j].setFilled(true, Color.GREEN);
+//                arrCells[i][j].setFilled(true, Color.GREEN);
                 add(arrCells[i][j]);
 
             }
@@ -87,7 +87,7 @@ public class Grid extends GCompound {
                 cell1 = arrCells[i][j];
                 cell2 = arrCells[i+1][j];
             }
-            if (!cell1.getSetContain().contains(cell2)) {
+            if (!cell1.getSetContain().contains(cell2) && !cell2.getSetContain().contains(cell1)) {
 //                    pause(1000);
                 current_wall.sendToFront();
                 current_wall.setColor(Color.WHITE);
@@ -98,10 +98,13 @@ public class Grid extends GCompound {
             }
         }
 
-        System.out.println("Done");
+//        System.out.println("Done");
 //        HashSet<Cell> current = arrCells[1][2].getSetContain();
 //        current.add(arrCells[2][3]);
+//        current.add(arrCells[4][5]);
 //        arrCells[2][3].setSetContain(current);
+//        HashSet<Cell> cu2 = arrCells[2][3].getSetContain();
+//        cu2.add(arrCells[3][3]);
 //        System.out.println(arrCells[1][2].getSetContain());
 //        System.out.println(arrCells[2][3].getSetContain());
     }
