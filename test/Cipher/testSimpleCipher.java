@@ -1,7 +1,9 @@
 package Cipher;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by DucLe on 11/7/16.
@@ -18,6 +20,6 @@ public class testSimpleCipher {
     public void testDecode() {
         SimpleCipher aCipher;
         aCipher = new SimpleCipher(3);
-        assertEquals("Test with 3 fails","defghi",aCipher.encode("abcdef"));
+        assertEquals("Test with 3 fails", "defghi", aCipher.encode("abcdef"));
     }
 }

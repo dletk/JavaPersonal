@@ -12,7 +12,7 @@ public class SimpleCipher {
 
     protected String encode(String message) {
         char[] raw_message = message.toCharArray();
-        for (int i=0; i<message.length(); i++) {
+        for (int i = 0; i < message.length(); i++) {
             if (raw_message[i] != ' ') {
                 if (i + shiftNumber <= 26) {
                     raw_message[i] += shiftNumber;

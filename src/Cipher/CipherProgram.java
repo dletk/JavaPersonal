@@ -6,6 +6,6 @@ package Cipher;
 public class CipherProgram {
     public static void main(String args[]) {
         SimpleCipher cipher = new SimpleCipher(3);
-        System.out.println("The message is: "+cipher.encode("Le Mai Thanh Duc"));
+        System.out.println("The message is: " + cipher.encode("Le Mai Thanh Duc"));
     }
 }
