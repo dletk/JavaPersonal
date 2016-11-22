@@ -5,7 +5,7 @@ import acm.graphics.GLine;
 import acm.graphics.GRect;
 
 import java.awt.*;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by DucLe on 11/20/16.
@@ -15,6 +15,8 @@ public class Grid extends GCompound {
     private GLine[][] arrLines_ver, arrLines_hor;
     //    The arrays to hold all the cells of the grid
     private Cell[][] arrCells;
+//    The ArrayList of all walls
+    private ArrayList<GLine> wallList;
     //    Size of each cell (length of wall), size of the grid (number of cells per edge), coordinate of the grid
     private int cellSize;
     private int size;
@@ -39,25 +41,81 @@ public class Grid extends GCompound {
 //      We need to have size-1 row of horizontal wall, each row has size walls
         arrLines_hor = new GLine[size - 1][size];
         arrCells = new Cell[size][size];
-        generateLines();
+        wallList = new ArrayList<>();
+        generateWalls();
     }
 
-    private void generateLines() {
+    private void generateWalls() {
 //      This loop will loop through the grid row by row, so x will be changed, y will be same
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+
                 if (j < size - 1) {
                     arrLines_ver[i][j] = new GLine(x + cellSize + cellSize * j, y + cellSize * i, x + cellSize + cellSize * j, y + cellSize * i + cellSize);
                     add(arrLines_ver[i][j]);
+                    wallList.add(arrLines_ver[i][j]);
                 }
                 if (i < size - 1) {
                     arrLines_hor[i][j] = new GLine(x + cellSize * j, y + cellSize + cellSize * i, x + cellSize * j + cellSize, y + cellSize + cellSize * i);
                     add(arrLines_hor[i][j]);
+                    wallList.add(arrLines_hor[i][j]);
                 }
-                arrCells[i][j] = new Cell(x+i*cellSize,y+j*cellSize,cellSize,cellSize,new HashSet<>());
+
+                arrCells[i][j] = new Cell(x+j*cellSize,y+i*cellSize,cellSize,cellSize,new HashSet<>());
                 arrCells[i][j].setFilled(true, Color.GREEN);
                 add(arrCells[i][j]);
+
             }
+        }
+    }
+
+    public void generateMaze() {
+        Collections.shuffle(wallList);
+        Iterator iter = wallList.iterator();
+        GLine current_wall;
+        Cell cell1, cell2;
+        while (iter.hasNext()) {
+            current_wall = (GLine) iter.next();
+            if (checkWall(current_wall) == 1) {
+                int j = (int) (current_wall.getStartPoint().getX() - x - cellSize) / cellSize;
+                int i = (int) (current_wall.getStartPoint().getY() - y) / cellSize;
+                cell1 = arrCells[i][j];
+                cell2 = arrCells[i][j + 1];
+            } else {
+                int j = (int) (current_wall.getStartPoint().getX() - x) / cellSize;
+                int i = (int) (current_wall.getStartPoint().getY() - y - cellSize) / cellSize;
+                cell1 = arrCells[i][j];
+                cell2 = arrCells[i+1][j];
+            }
+            if (!cell1.getSetContain().contains(cell2)) {
+//                    pause(1000);
+                current_wall.sendToFront();
+                current_wall.setColor(Color.WHITE);
+                HashSet<Cell> current_set = cell1.getSetContain();
+                current_set.addAll(cell2.getSetContain());
+                cell2.setSetContain(current_set);
+                cell1.setSetContain(current_set);
+            }
+        }
+
+        System.out.println("Done");
+//        HashSet<Cell> current = arrCells[1][2].getSetContain();
+//        current.add(arrCells[2][3]);
+//        arrCells[2][3].setSetContain(current);
+//        System.out.println(arrCells[1][2].getSetContain());
+//        System.out.println(arrCells[2][3].getSetContain());
+    }
+
+    /**
+     * Method to check whether a wall is vertical or horizontal
+     * @param aWall the input wall
+     * @return 1 if the wall is vertical, 0 if the wall is horizontal
+     */
+    private int checkWall(GLine aWall) {
+        if (aWall.getStartPoint().getX() == aWall.getEndPoint().getX()) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 }

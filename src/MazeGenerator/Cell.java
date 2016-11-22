@@ -16,6 +16,7 @@ public class Cell extends GRect {
     public Cell(double x, double y, double width, double height, HashSet<Cell> setContain) {
         super(x, y, width, height);
         this.setContain = setContain;
+        this.setContain.add(this);
     }
 
     public void setSetContain(HashSet<Cell> setContain) {

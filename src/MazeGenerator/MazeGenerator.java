@@ -9,7 +9,7 @@ import acm.program.GraphicsProgram;
 public class MazeGenerator extends GraphicsProgram {
 
     private static final int SIZE_CELLS = 20;
-    private static final int SIZE_MAZE = 30;
+    private static final int SIZE_MAZE = 3;
     private static final double UPPER_LEFT_X = 300;
     private static final double UPPER_LEFT_Y = 100;
 
@@ -18,11 +18,11 @@ public class MazeGenerator extends GraphicsProgram {
     public void init() {
         aMaze = new Grid(SIZE_CELLS, SIZE_MAZE, UPPER_LEFT_X, UPPER_LEFT_Y);
         add(aMaze);
-//        Make the cover for the maze
+//        Make the outer edge for the maze
         add(new GRect(UPPER_LEFT_X, UPPER_LEFT_Y, SIZE_CELLS*SIZE_MAZE, SIZE_CELLS*SIZE_MAZE));
     }
 
     public void run() {
-
+        aMaze.generateMaze();
     }
 }
