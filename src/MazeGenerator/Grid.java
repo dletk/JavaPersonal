@@ -2,10 +2,12 @@ package MazeGenerator;
 
 import acm.graphics.GCompound;
 import acm.graphics.GLine;
-import acm.graphics.GRect;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Created by DucLe on 11/20/16.
@@ -15,7 +17,7 @@ public class Grid extends GCompound {
     private GLine[][] arrLines_ver, arrLines_hor;
     //    The arrays to hold all the cells of the grid
     private Cell[][] arrCells;
-//    The ArrayList of all walls
+    //    The ArrayList of all walls
     private ArrayList<GLine> wallList;
     //    Size of each cell (length of wall), size of the grid (number of cells per edge), coordinate of the grid
     private int cellSize;
@@ -61,7 +63,7 @@ public class Grid extends GCompound {
                     wallList.add(arrLines_hor[i][j]);
                 }
 
-                arrCells[i][j] = new Cell(x+j*cellSize,y+i*cellSize,cellSize,cellSize,new HashSet<>());
+                arrCells[i][j] = new Cell(x + j * cellSize, y + i * cellSize, cellSize, cellSize, new HashSet<>());
 //                arrCells[i][j].setFilled(true, Color.GREEN);
                 add(arrCells[i][j]);
 
@@ -85,22 +87,22 @@ public class Grid extends GCompound {
                 int j = (int) (current_wall.getStartPoint().getX() - x) / cellSize;
                 int i = (int) (current_wall.getStartPoint().getY() - y - cellSize) / cellSize;
                 cell1 = arrCells[i][j];
-                cell2 = arrCells[i+1][j];
+                cell2 = arrCells[i + 1][j];
             }
             if (!cell1.getSetContain().contains(cell2) && !cell2.getSetContain().contains(cell1)) {
-                    pause(100);
+                pause(50);
                 current_wall.sendToFront();
                 current_wall.setColor(Color.WHITE);
 //                HashSet<Cell> current_set = cell1.getSetContain();
 //                current_set.addAll(cell2.getSetContain());
 //                cell2.setSetContain(current_set);
 //                cell1.setSetContain(current_set);
-                joinSet(cell1,cell2);
+                joinSet(cell1, cell2);
             }
         }
 
-        for (int i=0; i< arrCells.length;i++) {
-            for (int j=0; j< arrCells.length;j++) {
+        for (int i = 0; i < arrCells.length; i++) {
+            for (int j = 0; j < arrCells.length; j++) {
                 System.out.println(arrCells[i][j].getSetContain());
             }
         }
@@ -132,6 +134,7 @@ public class Grid extends GCompound {
 
     /**
      * Method to check whether a wall is vertical or horizontal
+     *
      * @param aWall the input wall
      * @return 1 if the wall is vertical, 0 if the wall is horizontal
      */
