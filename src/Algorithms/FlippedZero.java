@@ -7,10 +7,14 @@ import java.util.Arrays;
  */
 public class FlippedZero {
     public static void main(String[] args) {
-        System.out.println(checkZero(new int[]{1,0,0,1,1}, 1));
+        int[] something = new int[10000];
+        long start = System.currentTimeMillis();
+        System.out.println(checkZero(new int[]{1, 0, 0, 1, 1}, 1));
+        checkZero(something, 2);
         System.out.println(checkZero(new int[]{1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1}, 2));
         System.out.println(checkZero(new int[]{1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1}, 1));
-        System.out.println(checkZero(new int[]{0,0,0,0,0,0,1,0,0,1}, 20));
+        System.out.println(checkZero(new int[]{0, 0, 0, 0, 0, 0, 1, 0, 0, 1}, 20));
+        System.out.println(System.currentTimeMillis() - start);
     }
 
     public static String checkZero(int[] anArray, int m) {
